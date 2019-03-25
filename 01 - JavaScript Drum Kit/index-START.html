@@ -58,6 +58,23 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  window.addEventListener('keydown', e => {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const divKey = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+
+    if(!audio || !divKey)  return; // if the key pressed is not inlcuded in the keyboard drum.
+
+    audio.currentTime = 0; // reset the audio to the start.
+    audio.play(); // play audio element
+    
+    divKey.classList.toggle("playing");
+
+  })
+
+window.addEventListener('keyup', function(e){
+  const divKey = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  divKey.classList.remove("playing");
+})
 
 </script>
 
