@@ -62,11 +62,63 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform: rotate(90deg);
+      transform-origin: 100%;
     }
+
+    .second-hand{
+      height: 3px;
+      transition: all 0.05s;
+      transition-timing-function:cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    .hour-hand{
+      width: 35%;
+      transform: rotate(0deg);
+      margin-left: 15%; 
+      
+    
+    }
+
 
   </style>
 
   <script>
+
+    const secondHand = document.querySelector('.second-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+
+    const setClockTime = (degree) => {
+      const dateNow = new Date();
+
+      const minutes = dateNow.getMinutes();
+      const seconds = dateNow.getSeconds();
+      const hour = dateNow.getHours();
+      
+      const secondsDeg = (((seconds/60) * 360) + 91 ); // computation for the exact angle. I added +1
+      const minutesDeg = (((minutes/60) * 360) + 91 );
+      const hourDeg = ((360/hour) + 91 );
+
+      secondHand.style.transform = `rotate(${secondsDeg}deg)`;
+      console.log(`seconds: ${seconds}`);
+
+      if(secondsDeg === 91 || degree ===91){
+        minuteHand.style.transform = `rotate(${minutesDeg}deg)`;
+        console.log(`minutes: ${minutes}`);
+      }
+
+      if(minutesDeg === 91 || degree ===91){
+        hourHand.style.transform = `rotate(${hourDeg}deg)`;
+        console.log(`Hour: ${hour}`);
+      }
+    }
+
+    
+    setClockTime(91); // set time  initially. 
+
+    // then let the interval run the functions and update the time.
+    setInterval(setClockTime,1000);
 
 
   </script>
