@@ -96,6 +96,54 @@
   </div>
 
 <script>
+const checkboxes = Array.from(document.querySelectorAll('.item input[type="checkbox"]'));
+const selectedCheckboxIndexes = [];
+
+let lastChecked = -1;
+let smallest  = -1;
+let Biggest  = checkboxes.length;
+
+
+function selectInputs(e){
+  
+  if(e.shiftKey){ // check if clicked was accompanied by shift key
+
+    checkboxes.forEach((c,i) => 
+    {     
+      if(c.checked === true)
+      {
+        
+        // restrict the index to be added only once to the array collection.
+        const indexExist = selectedCheckboxIndexes.some(arr => arr === i)
+        if(!indexExist){
+          selectedCheckboxIndexes.push(i);
+        }
+      }
+        if(selectedCheckboxIndexes !== null)
+        {
+          smallest = Math.min.apply(null,selectedCheckboxIndexes)
+
+          if(selectedCheckboxIndexes.length > 1){
+            Biggest = Math.max.apply(null,selectedCheckboxIndexes)
+          }
+          
+        } 
+    })
+
+    // set the selected checkboxes between smallest and biggest
+    for (let index = smallest; index < Biggest; index++) {
+        checkboxes[index].checked = true; 
+    }  
+  }
+  
+}
+
+window.addEventListener("click",selectInputs);
+
+
+
+
+
 </script>
 </body>
 </html>
